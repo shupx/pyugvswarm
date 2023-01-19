@@ -172,7 +172,7 @@ class UGVServer:
         ugvsById (Dict[int, UGV]): Index to the same UGV
             objects by their ID number
     """
-    def __init__(self, ugvs_yaml="../launch/ugvs.yaml"):
+    def __init__(self, ugvs_yaml="./config/ugvs.yaml"):
         """Initialize the server. Waits for all ROS topics.
 
         Args:

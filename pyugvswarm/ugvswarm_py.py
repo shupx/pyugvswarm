@@ -40,12 +40,12 @@ class UGVswarm:
 
         if ugvs_yaml is None:
             ## absolute path, modified by spx ##
-            folder = os.path.dirname(os.path.abspath(__file__)) # absolute path of this file 
+            folder = os.path.dirname(os.path.abspath(__file__)) # absolute path of this folder 
             folder = os.path.dirname(folder) # up folder
-            folder = os.path.dirname(folder) # up folder
-            ugvs_yaml = folder + "/launch/ugvs.yaml"
-            # ugvs_yaml = "../launch/ugvs.yaml"
+            ugvs_yaml = folder + "/config/ugvs.yaml"
+            # ugvs_yaml = "./config/ugvs.yaml"
         if ugvs_yaml.endswith(".yaml"):
+            print('[UGVswarm] load ugvs_yaml: {}'.format(ugvs_yaml))
             ugvs_yaml = open(ugvs_yaml, 'r').read()
 
         if args.sim:

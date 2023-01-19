@@ -271,7 +271,7 @@ class UGV:
 
 
 class UGVServer:
-    def __init__(self, timeHelper, ugvs_yaml="../launch/ugvs.yaml"):
+    def __init__(self, timeHelper, ugvs_yaml="./config/ugvs.yaml"):
         """Initialize the server.
 
         Args:
