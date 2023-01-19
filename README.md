@@ -79,7 +79,7 @@ TODO.
 
 Peixuan Shu (shupeixuan@qq.com)
 
-### Thanks
+### Acknowledgement
 
 This project is mainly motivated by the `pycrazyswarm` of [crazyswarm](https://github.com/USC-ACTLab/crazyswarm/tree/master/ros_ws/src/crazyswarm/scripts/pycrazyswarm), which is a python wrapper around crazyswarm ROS nodes to control crazyflie UAV swarm. Thanks for their remarkable work!
 
