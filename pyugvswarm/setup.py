@@ -12,11 +12,11 @@ setup(
 
     author='Peixuan Shu',
     author_email='shupeixuan@qq.com',
-    license='GPLv3',
+    license='BSD',
 
     classifiers=[
         'Development Status :: 2 - Pre-ALpha',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'License :: OSI Approved :: BSD License',
         'Topic :: System :: Hardware :: Hardware Drivers',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3'

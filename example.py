@@ -2,7 +2,7 @@
 # coding:utf-8
 # author: Peixuan SHu
 # first created on 2023.1.19
-# license: GPLv3
+# license: BSD-3-Clause
 # description: example script of pyugvswarm
 # python example.py --sim --vis=null --dt=0.1
 
