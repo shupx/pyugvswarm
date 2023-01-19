@@ -1,7 +1,7 @@
 # pyugvswarm
 
 ### Introduction
-A python wrapper around unmanned ground vehicle (UGV) swarm positioning/control ROS nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
+A python wrapper around unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
 
 ### Install
 
@@ -23,9 +23,15 @@ pip list |grep pyugvswarm
 
 - #### Method 2: 
 
-This method requires copying the source code.
+You can simply copy the `pyugvswarm/pyugvwarm/` folder and optionally `config/` folder into your project:
 
-You can simply copy the `pyugvswarm/pyugvwarm/` folder and optionally `config/` folder into your project as the following structure:
+```bash
+git clone https://gitee.com/shu-peixuan/pyugvswarm.git
+cp -r pyugvswarm/pyugvswarm ${your_scripts_path}
+```
+
+The folder structure should be like this:
+
 ```bash
 |__ Your scripts folder
    |_ pyugvswarm/
@@ -33,6 +39,17 @@ You can simply copy the `pyugvswarm/pyugvwarm/` folder and optionally `config/` 
    |  |_ ugvs.yaml
    |_ your_python_script.py
 ```
+
+- #### Method 3 (simple): 
+
+Write your python scripts directly in this repository like the `example.py`.
+
+```bash
+git clone https://gitee.com/shu-peixuan/pyugvswarm.git
+cd pyugvswarm/
+touch your_python_script.py
+```
+
 
 ### Usage
 
@@ -60,8 +77,10 @@ TODO.
 
 ### Contributor
 
-Peixuan Shu(shupeixuan@qq.com)
+Peixuan Shu (shupeixuan@qq.com)
 
 ### Thanks
 
-This project
+This project is mainly motivated by the `pycrazyswarm` of [crazyswarm](https://github.com/USC-ACTLab/crazyswarm/tree/master/ros_ws/src/crazyswarm/scripts/pycrazyswarm), which is a python wrapper around crazyswarm ROS nodes to control crazyflie UAV swarm. Thanks for their remarkable work!
+
+Crazyswarm1 documentation: https://crazyswarm.readthedocs.io/en/latest/
