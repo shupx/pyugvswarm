@@ -1,7 +1,7 @@
 # pyugvswarm
 
 ### Introduction
-A python wrapper around unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
+A python package wrapper around unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
 
 ### Install
 
@@ -28,6 +28,7 @@ You can simply copy the `pyugvswarm/pyugvwarm/` folder and optionally `config/` 
 ```bash
 git clone https://gitee.com/shu-peixuan/pyugvswarm.git
 cp -r pyugvswarm/pyugvswarm ${your_scripts_path}
+cp -r pyugvswarm/config ${your_scripts_path} # optional
 ```
 
 The folder structure should be like this:
