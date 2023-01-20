@@ -11,14 +11,19 @@ Install `pyugvswarm` python package from source:
 
 ```bash
 git clone https://gitee.com/shu-peixuan/pyugvswarm.git
-cd pyugvswarm/pyugvswarm
-pip install -e . # use pip3 if you use python3
+cd pyugvswarm/
+pip install -e . # use pip3 if you use python3 in ubuntu18
 ```
 Check you have pyugvswarm package in your PYTHON environment:
 
 ```bash
-pip list |grep pyugvswarm
-# should list the version and location of pyugvswarm
+pip show pyugvswarm # use pip3 if you use python3 in ubuntu18
+```
+
+To uninstall pyugvswarm:
+
+```bash
+pip uninstall pyugvswarm # use pip3 if you use python3 in ubuntu18
 ```
 
 - #### Method 2: 

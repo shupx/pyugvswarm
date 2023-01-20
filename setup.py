@@ -5,7 +5,7 @@ from setuptools import setup
 setup(
     name='pyugvswarm',
     version='1.0',
-    packages=find_packages('pyugvswarm'),
+    packages=find_packages('.pyugvswarm'),
 
     description='python wrapper for ugv swarm control',
     url='https://gitee.com/shu-peixuan/pyugvswarm',
