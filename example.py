@@ -17,14 +17,14 @@ def main(yaml_path):
 
     ################# Send cmd_vel #####################
     rate = 20 # Hz
-    tf = 5 # (s)
+    tf = 20 # (s)
     start_time = timeHelper.time()
     while not timeHelper.isShutdown():
         t = timeHelper.time() - start_time
         if t > tf:
             break
         for i, ugv in enumerate(allugvs.ugvs):
-            ugv.cmdVelBody(vx=0.1, vy=0.0, w=1.0)
+            ugv.cmdVelBody(vx=0.1, vy=0.0, w=0.2)
             pos = ugv.position()
             yaw = ugv.yaw()
         timeHelper.sleepForRate(rate)
