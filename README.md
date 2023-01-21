@@ -76,11 +76,12 @@ ugvs = allugvs.ugvs
 ugv_0 = ugvs[0]
 ```
 
-3. Run positioning, communication nodes and your script:
+3. Run the positioning & communication nodes and your script:
 
 ```bash
 cd launch/
-./run_exp_mocap.launch # or nluwb,cfuwb
+./run_sim.sh # for simulation
+./run_exp_mocap.sh # or nluwb,cfuwb for experiment
 ```
 
 ### API reference
@@ -106,6 +107,4 @@ Peixuan Shu (shupeixuan@qq.com)
 
 ### Acknowledgement
 
-This project is mainly inspired by the `pycrazyswarm` of [crazyswarm](https://github.com/USC-ACTLab/crazyswarm/tree/master/ros_ws/src/crazyswarm/scripts/pycrazyswarm), which is a python wrapper around crazyswarm ROS nodes to control crazyflie UAV swarm. Thanks for their remarkable work!
-
-Crazyswarm1 documentation: https://crazyswarm.readthedocs.io/en/latest/
+This project is mainly inspired by the `pycrazyswarm` of [crazyswarm](https://github.com/USC-ACTLab/crazyswarm/tree/master/ros_ws/src/crazyswarm/scripts/pycrazyswarm), which is a python wrapper around crazyswarm ROS nodes to control crazyflie UAV swarm. Thanks for their remarkable work! Crazyswarm1 documentation: https://crazyswarm.readthedocs.io/en/latest/
