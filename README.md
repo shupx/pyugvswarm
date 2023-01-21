@@ -76,9 +76,28 @@ ugvs = allugvs.ugvs
 ugv_0 = ugvs[0]
 ```
 
+3. Run positioning, communication nodes and your script:
+
+```bash
+cd launch/
+./run_exp_mocap.launch # or nluwb,cfuwb
+```
+
 ### API reference
 
-TODO.
+The most common use:
+
+```py
+ugv.cmdVelBody(vx,vy,w) # send speeds in body frame
+ugv.stop() # stop
+allugvs.stop() # stop all ugvs
+ugv.position() # return xyz array (m)
+ugv.yaw() # return yaw (rad)
+timeHelper.time() # return time (s)
+timeHelper.sleepForRate(rate) # sleep for rate
+timeHelper.sleep(time) # sleep for seconds
+timeHelper.plot_data() # plot x-y, yaw-t (sim only)
+```
 
 
 ### Contributor
@@ -87,6 +106,6 @@ Peixuan Shu (shupeixuan@qq.com)
 
 ### Acknowledgement
 
-This project is mainly motivated by the `pycrazyswarm` of [crazyswarm](https://github.com/USC-ACTLab/crazyswarm/tree/master/ros_ws/src/crazyswarm/scripts/pycrazyswarm), which is a python wrapper around crazyswarm ROS nodes to control crazyflie UAV swarm. Thanks for their remarkable work!
+This project is mainly inspired by the `pycrazyswarm` of [crazyswarm](https://github.com/USC-ACTLab/crazyswarm/tree/master/ros_ws/src/crazyswarm/scripts/pycrazyswarm), which is a python wrapper around crazyswarm ROS nodes to control crazyflie UAV swarm. Thanks for their remarkable work!
 
 Crazyswarm1 documentation: https://crazyswarm.readthedocs.io/en/latest/
