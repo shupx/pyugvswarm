@@ -2,6 +2,8 @@
 
 This doc is built by sphinx in .rst format and uploaded to [readthedocs](https://readthedocs.org/).
 
+Online document: https://pyugvswarm.readthedocs.io/
+
 ## Build
 
 Install dependencies:
@@ -32,4 +34,4 @@ make html
   sphinx-autobuild source build/html
   ```
 
-    Then view http://127.0.0.1:8000 in browser. The html will auto update when editing the `source/` files.
+  Then view http://127.0.0.1:8000 in browser. The html will auto update when editing the `source/` files.
