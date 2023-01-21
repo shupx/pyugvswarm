@@ -3,6 +3,8 @@
 ### Introduction
 A python package wrapper around unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
 
+Online document: https://pyugvswarm.readthedocs.io/
+
 ### Install
 
 - #### Method 1 (recommended): 
@@ -85,6 +87,8 @@ cd launch/
 ```
 
 ### API reference
+
+Refer to https://pyugvswarm.readthedocs.io/en/latest/api_reference.html
 
 The most common use:
 
