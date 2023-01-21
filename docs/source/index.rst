@@ -19,7 +19,7 @@ This is a python package wrapper around unmanned ground vehicle (UGV) swarm posi
    acknowledgement
 
 .. Indices and tables
-==================
+.. ==================
 
 .. * :ref:`genindex`
 .. * :ref:`modindex`
