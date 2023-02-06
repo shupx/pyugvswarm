@@ -5,6 +5,10 @@ pyugvswarm is a python package wrapper around the unmanned ground vehicle (UGV) 
 
 Online document: https://pyugvswarm.readthedocs.io/
 
+Github repository: https://github.com/shupx/pyugvswarm.git
+
+Gitee repository: https://gitee.com/shu-peixuan/pyugvswarm.git
+
 This python wrapper should be used with other submodules like [swarm_ros_bridge](https://gitee.com/shu-peixuan/swarm_ros_bridge)(for communication) and positioning ROS packages. The framework is shown below:
 
 ![pyugvswarm_framework.png](pictures/pyugvswarm_framework.png)
