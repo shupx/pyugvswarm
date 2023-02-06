@@ -1,6 +1,6 @@
-.. _tutorial:
+.. _usage:
 
-Tutorial
+Usage
 =========
 
 1. Specify your ugvs information in a configuration file similar to ``config/ugvs.yaml``:

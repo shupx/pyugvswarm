@@ -18,7 +18,7 @@ This is a python package wrapper around unmanned ground vehicle (UGV) swarm posi
 
    overview
    install
-   tutorial
+   usage
    api_reference
    acknowledgement
 

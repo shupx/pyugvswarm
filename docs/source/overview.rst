@@ -10,6 +10,10 @@ This is a python package wrapper around unmanned ground vehicle (UGV) swarm posi
 |  gitee repository: 
 |  https://gitee.com/shu-peixuan/pyugvswarm.git
 
+This python wrapper should be used with other submodules like `swarm_ros_bridge <https://gitee.com/shu-peixuan/swarm_ros_bridge>`_ (for communication) and positioning ROS packages. The framework is shown below:
+
+.. image:: ../../pictures/pyugvswarm_framework.png
+
 pyugvswarm runs on **Ubuntu Linux** in one of the following configurations:
 
 ====== ====== =======
