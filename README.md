@@ -1,9 +1,15 @@
 # pyugvswarm
 
 ### Introduction
-A python package wrapper around unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
+pyugvswarm is a python package wrapper around the unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
 
 Online document: https://pyugvswarm.readthedocs.io/
+
+This python wrapper should be used with other submodules like [swarm_ros_bridge](https://gitee.com/shu-peixuan/swarm_ros_bridge)(for communication) and positioning ROS packages. The framework is shown below:
+
+![pyugvswarm_framework.png](pictures/pyugvswarm_framework.png)
+
+
 
 ### Install
 
@@ -103,7 +109,6 @@ timeHelper.sleepForRate(rate) # sleep for rate
 timeHelper.sleep(time) # sleep for seconds
 timeHelper.plot_data() # plot x-y, yaw-t (sim only)
 ```
-
 
 ### Contributor
 
