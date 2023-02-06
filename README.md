@@ -1,7 +1,7 @@
 # pyugvswarm
 
 ### Introduction
-pyugvswarm is a python package wrapper around the unmanned ground vehicle (UGV) swarm positioning/control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
+pyugvswarm is a python package wrapper around the unmanned ground vehicle (UGV) swarm positioning / communication / control ROS1 nodes. We offer python APIs which simplifies the development of UGV swarm. A lightweight python simulator is also provided to validate your program before the real experiment.
 
 Online document: https://pyugvswarm.readthedocs.io/
 
