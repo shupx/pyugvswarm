@@ -50,7 +50,7 @@ class UGV:
     The bulk of the module's functionality is contained in this class.
     """
 
-    def __init__(self, id, initialPosition, pos_source, yaw_source):
+    def __init__(self, id, initialPosition, pos_source, yaw_source, uwb_tag_id):
         """Constructor.
 
         Args:
@@ -63,6 +63,7 @@ class UGV:
             yaw_source: (mocap, imu)
         """
         self.id = id
+        self.uwb_tag_id = uwb_tag_id
         prefix = "/car" + str(id)
         self.prefix = prefix
         self.initialPosition = np.array(initialPosition)
@@ -109,7 +110,7 @@ class UGV:
         cmdVelMsg.angular.x = 0.0
         cmdVelMsg.angular.y = 0.0
         cmdVelMsg.angular.z = 0.0
-        for _ in range(5): # loop for several times
+        for _ in range(3): # loop for several times
             self.cmdVelPublisher.publish(cmdVelMsg)
 
     def cmdVelBody(self, vx, vy, w, groupMask = 0):
@@ -145,8 +146,14 @@ class UGV:
         self.state_pos[2] = data.pose.position.z
     
     def nluwb_pos_cb(self, data):
-        # TODO
-        pass
+        nodes = data.nodes
+        for node in nodes:
+            tag_id = node.id
+            if tag_id == self.uwb_tag_id:
+                self.state_pos[0] = node.pos_3d[0] # uwb 
+                self.state_pos[1] = node.pos_3d[1] # uwb
+                self.state_pos[2] = node.pos_3d[2] # uwb
+                break
 
     def cfuwb_pos_cb(self, data):
         self.state_pos[0] = data.position.x / 1000.0 # pos x (mm -> m)
@@ -199,7 +206,8 @@ class UGVServer:
             initialPosition = ugv["initialPosition"]
             pos_source = ugv["pos_source"]
             yaw_source = ugv["yaw_source"]
-            car = UGV(id, initialPosition, pos_source, yaw_source)
+            uwb_tag_id = ugv["uwb_tag_id"]
+            car = UGV(id, initialPosition, pos_source, yaw_source, uwb_tag_id)
             self.ugvs.append(car)
             self.ugvsById[id] = car
 

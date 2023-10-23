@@ -15,3 +15,9 @@ ugvs:
     pos_source: mocap # mocap, nluwb, cfuwb
     yaw_source: mocap # mocap or imu
     initialPosition: [0.0, 0.55, 0.0, 0.0] # [x(m),y(m),z(m),yaw(rad)]
+  
+  - id: 11
+    pos_source: nluwb # mocap, nluwb, cfuwb
+    yaw_source: imu # mocap, imu
+    uwb_tag_id: 11
+    initialPosition: [0.0, 0.0, 0.0, 1.57] # [x(m),y(m),z(m),yaw(rad)]
