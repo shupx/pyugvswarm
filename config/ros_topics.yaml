@@ -7,8 +7,8 @@
 ### list all <IPname: IP> here (IPname can be set arbitrarily) ###
 IP:
   self: '*'   # '*' stands for all self IPs
-  car7: 192.168.124.107
-  car10: 192.168.124.110
+  car7: 192.168.31.107
+  car10: 192.168.31.110
 
 ####### Send these ROS messages to remote robots #######
 ## if no send_topics needed, comment all these out
@@ -17,13 +17,13 @@ send_topics:
   msg_type: geometry_msgs/Twist # ROS message type (rosmsg style)
   max_freq: 100 # max send frequency (Hz) int
   srcIP: self # self IP
-  srcPort: 3001 # ports of send_topics should be different
+  srcPort: 3007 # ports of send_topics should be different
 
 - topic_name: /car10/cmd_vel
   msg_type: geometry_msgs/Twist
   max_freq: 100
   srcIP: self
-  srcPort: 3002
+  srcPort: 3010
 
 ####### receive these ROS messages from remote robots #######
 ## if no recv_topics needed, comment all these out

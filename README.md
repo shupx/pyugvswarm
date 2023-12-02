@@ -11,11 +11,29 @@ Gitee repository: https://gitee.com/shu-peixuan/pyugvswarm.git
 
 This python wrapper should be used with other submodules like [swarm_ros_bridge](https://gitee.com/shu-peixuan/swarm_ros_bridge)(for communication) and positioning ROS packages. The framework is shown below:
 
-![pyugvswarm_framework.png](pictures/pyugvswarm_framework.png)
+<img src="pictures/pyugvswarm_framework.png" alt="pyugvswarm_framework.png" style="zoom: 20%;" />
 
 
 
 ### Install
+
+Dependencies for real experiment:
+
+```bash
+# If you use mocap for positioning, then you should install vrpn  
+# change 'noetic' into 'melodic' for ubuntu18:
+sudo apt install -y ros-noetic-vrpn-client-ros
+
+# If you use UWB for positioning, then you should build `nlink_parser` (https://www.nooploop.com/download) ROS package for nooploop UWB module:
+cd ~
+mkdir -p nlink_parser_ws/src
+cd nlink_parser_ws/src
+git clone --recursive https://gitee.com/shu-peixuan/nlink_parser.git
+cd ../
+catkin_make
+catkin_make
+echo "source ~/nlink_parser_ws/devel/setup.bash" >> ~/.bashrc
+```
 
 - #### Method 1 (recommended): 
 
@@ -91,8 +109,29 @@ ugv_0 = ugvs[0]
 3. Run the positioning & communication nodes and your script:
 
 ```bash
+### For simulation
+python example.py --sim  # --dt=0.1 --vis=null
+
+### For experiment
+## on UGV7 for example:
+roslaunch turn_on_wheeltec_robot turn_on_wheeltec_robot.launch
+cd launch/
+roslaunch swarm_ros_bridge_ugv7.launch # communication
+
+## on Ground Station
+cd launch/
+roslaunch swarm_ros_bridge.launch # communication
+roslaunch vrpn.launch # mocap
+# roslaunch launch/linktrack.launch # uwb
+python example.py
+```
+
+Or use shell script:
+
+```bash
 cd launch/
 ./run_sim.sh # for simulation
+./run_sim_display.sh # for matplot 3d display 
 ./run_exp_mocap.sh # or nluwb,cfuwb for experiment
 ```
 
@@ -111,7 +150,7 @@ ugv.yaw() # return yaw (rad)
 timeHelper.time() # return time (s)
 timeHelper.sleepForRate(rate) # sleep for rate
 timeHelper.sleep(time) # sleep for seconds
-timeHelper.plot_data() # plot x-y, yaw-t (sim only)
+timeHelper.plot_data() # plot x-y, yaw-t (for simulation only)
 ```
 
 ### Contributor

@@ -50,7 +50,7 @@ class UGV:
     The bulk of the module's functionality is contained in this class.
     """
 
-    def __init__(self, id, initialPosition, pos_source, yaw_source, uwb_tag_id):
+    def __init__(self, id, initialPosition, pos_source, yaw_source, pos_tag):
         """Constructor.
 
         Args:
@@ -61,12 +61,16 @@ class UGV:
                 z == 0.0.
             pos_source: (mocap, nluwb, cfuwb)
             yaw_source: (mocap, imu)
+            pos_tag: mocap_marker_name for mocap, uwb_tag_id for nluwb
         """
         self.id = id
-        self.uwb_tag_id = uwb_tag_id
+        if pos_source == "mocap":
+            self.mocap_markerset_name = pos_tag
+        if pos_source == "nluwb":
+            self.uwb_tag_id = pos_tag
+        self.initialPosition = np.array(initialPosition)
         prefix = "/car" + str(id)
         self.prefix = prefix
-        self.initialPosition = np.array(initialPosition)
 
         ## cmdvel_topic: /car${id}/cmd_vel # geometry_msgs/Twist type
         self.cmdVelPublisher = rospy.Publisher(prefix + "/cmd_vel", geometry_msgs.msg.Twist, queue_size=1)
@@ -75,9 +79,9 @@ class UGV:
         if pos_source == "mocap":
             # mocap_pose_topic: /vrpn_client_node/car${id}/pose  
             if yaw_source == "mocap": # read pose (pos+yaw)
-                rospy.Subscriber("/vrpn_client_node" + prefix + "/pose", geometry_msgs.msg.PoseStamped, self.mocap_pose_cb, queue_size=1)
+                rospy.Subscriber("/vrpn_client_node/" + self.mocap_markerset_name + "/pose", geometry_msgs.msg.PoseStamped, self.mocap_pose_cb, queue_size=1)
             else: # only read pos
-                rospy.Subscriber("/vrpn_client_node" + prefix + "/pose", geometry_msgs.msg.PoseStamped, self.mocap_pos_cb, queue_size=1)
+                rospy.Subscriber("/vrpn_client_node/" + self.mocap_markerset_name + "/pose", geometry_msgs.msg.PoseStamped, self.mocap_pos_cb, queue_size=1)
         elif pos_source == "nluwb":
             # nluwb_pos_topic: /nlink_linktrack_anchorframe0
             import nlink_parser.msg
@@ -206,8 +210,15 @@ class UGVServer:
             initialPosition = ugv["initialPosition"]
             pos_source = ugv["pos_source"]
             yaw_source = ugv["yaw_source"]
-            uwb_tag_id = ugv["uwb_tag_id"]
-            car = UGV(id, initialPosition, pos_source, yaw_source, uwb_tag_id)
+            if pos_source == "mocap":
+                pos_tag = ugv["mocap_markerset_name"]
+            elif pos_source == "nluwb":
+                pos_tag = ugv["uwb_tag_id"]
+            elif pos_source == "cfuwb":
+                pos_tag = "none"
+            else:
+                rospy.ERROR("Unsupported pos_source: {}".format(pos_source))
+            car = UGV(id, initialPosition, pos_source, yaw_source, pos_tag)
             self.ugvs.append(car)
             self.ugvsById[id] = car
 

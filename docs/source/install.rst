@@ -12,6 +12,24 @@ Ubuntu Python ROS
 18.04  2.7    Melodic
 ====== ====== =======
 
+Install dependencies for real experiment:
+
+.. code:: bash
+    
+    # If you use mocap for positioning, then you should install vrpn  
+    # change 'noetic' into 'melodic' for ubuntu18:
+    sudo apt install -y ros-noetic-vrpn-client-ros
+
+    # If you use UWB for positioning, then you should build `nlink_parser` (https://www.nooploop.com/download) ROS package for nooploop UWB module:
+    cd ~
+    mkdir -p nlink_parser_ws/src
+    cd nlink_parser_ws/src
+    git clone --recursive https://gitee.com/shu-peixuan/nlink_parser.git
+    cd ../
+    catkin_make
+    catkin_make
+    echo "source ~/nlink_parser_ws/devel/setup.bash" >> ~/.bashrc    
+
 There are three methods to install pyugvswarm python package:
 
 .. tabs::
