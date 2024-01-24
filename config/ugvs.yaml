@@ -1,19 +1,27 @@
 ### The ugvs configuration file.
-# cmdvel_topic: /car${id}/cmd_vel # geometry_msgs/Twist type
+# cmdvel_topic: /${prefix}${id}/cmd_vel # geometry_msgs/Twist type
+# imu_topic: /${prefix}${id}/imu # sensor_msgs/Imu
 # mocap_pose_topic: /vrpn_client_node/mocap_markerset_name/pose # geometry_msgs/PoseStamped type
 # nluwb_pos_topic: /nlink_linktrack_anchorframe0 # nlink_parser/LinktrackAnchorframe0 type
-# cfuwb_pos_topic: /car${id}/pos # geometry_msgs/PoseStamped type
-# imu_topic: /car${id}/imu/data # sensor_msgs/Imu
+# cfuwb_pos_topic: /${prefix}${id}/pos # geometry_msgs/PoseStamped type
+# pose_topic: /${prefix}${id}/pose # geometry_msgs/PoseStamped type
+# default prefix: "car"
 
 ugvs:
   - id: 7
-    pos_source: mocap # mocap, nluwb, cfuwb
-    yaw_source: mocap # mocap, imu
+    pos_source: mocap # mocap, nluwb, cfuwb, pose
+    yaw_source: mocap # mocap, imu, pose
     mocap_markerset_name: ugv7 # markerset name in vrpn
     initialPosition: [0.25, 0.55, 0.0, -1.8] # [x(m),y(m),z(m),yaw(rad)] # only for simulation
   
   - id: 10
-    pos_source: nluwb # mocap, nluwb, cfuwb
-    yaw_source: imu # mocap, imu
+    pos_source: nluwb # mocap, nluwb, cfuwb, pose
+    yaw_source: imu # mocap, imu, pose
     uwb_tag_id: 10 # nooploop uwb tag id
+    initialPosition: [0.0, 0.0, 0.0, 1.57] # [x(m),y(m),z(m),yaw(rad)]  # only for simulation
+
+  - id: 1
+    pos_source: pose # mocap, nluwb, cfuwb, pose
+    yaw_source: pose # mocap, imu, pose
+    prefix: ugv
     initialPosition: [0.0, 0.0, 0.0, 1.57] # [x(m),y(m),z(m),yaw(rad)]  # only for simulation

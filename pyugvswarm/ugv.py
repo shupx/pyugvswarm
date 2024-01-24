@@ -50,7 +50,7 @@ class UGV:
     The bulk of the module's functionality is contained in this class.
     """
 
-    def __init__(self, id, initialPosition, pos_source, yaw_source, pos_tag):
+    def __init__(self, id, prefix, initialPosition, pos_source, yaw_source, pos_tag):
         """Constructor.
 
         Args:
@@ -66,14 +66,15 @@ class UGV:
         self.id = id
         if pos_source == "mocap":
             self.mocap_markerset_name = pos_tag
-        if pos_source == "nluwb":
+        elif pos_source == "nluwb":
             self.uwb_tag_id = pos_tag
+        elif pos_source == "pose":
+            self.pose_prefix =  pos_tag
         self.initialPosition = np.array(initialPosition)
-        prefix = "/car" + str(id)
-        self.prefix = prefix
+        self.prefix = prefix + str(id)
 
         ## cmdvel_topic: /car${id}/cmd_vel # geometry_msgs/Twist type
-        self.cmdVelPublisher = rospy.Publisher(prefix + "/cmd_vel", geometry_msgs.msg.Twist, queue_size=1)
+        self.cmdVelPublisher = rospy.Publisher(self.prefix + "/cmd_vel", geometry_msgs.msg.Twist, queue_size=1)
 
         ## pos subscribe topic: (mocap, nluwb, cfuwb)
         if pos_source == "mocap":
@@ -88,16 +89,20 @@ class UGV:
             rospy.Subscriber("/nlink_linktrack_anchorframe0", nlink_parser.msg.LinktrackAnchorframe0, self.nluwb_pos_cb, queue_size=1)
         elif pos_source == "cfuwb":
             # cfuwb_pos_topic: /car${id}/pos
-            rospy.Subscriber(prefix + "/pos", geometry_msgs.msg.PoseStamped, self.cfuwb_pos_cb, queue_size=1)
+            rospy.Subscriber(self.prefix + "/pos", geometry_msgs.msg.PoseStamped, self.cfuwb_pos_cb, queue_size=1)
+        elif pos_source == "pose":
+            rospy.Subscriber(self.prefix + "/pose", geometry_msgs.msg.PoseStamped, self.pose_cb, queue_size=1)
         else:
             raise Exception('[ugv.py] Unknown pos_source: {0}'.format(pos_source))            
 
         ## yaw subscribe topic: (mocap, imu)
         if yaw_source == "mocap":
-            pass
+            pass # already read in vrpn topic
         elif yaw_source == "imu":
             # imu_topic: /car${id}/imu/data
-            rospy.Subscriber(prefix + "/imu", sensor_msgs.msg.Imu, self.imu_yaw_cb, queue_size=1)
+            rospy.Subscriber(self.prefix + "/imu", sensor_msgs.msg.Imu, self.imu_yaw_cb, queue_size=1)
+        elif yaw_source == "pose":
+            pass # already read in pose topic
         else:
             raise Exception('[ugv.py] Unknown yaw_source: {0}'.format(yaw_source))
         
@@ -134,6 +139,17 @@ class UGV:
         return self.state_yaw
     
     def mocap_pose_cb(self, data):
+        self.state_pos[0] = data.pose.position.x
+        self.state_pos[1] = data.pose.position.y
+        self.state_pos[2] = data.pose.position.z
+        qw = data.pose.orientation.w
+        qx = data.pose.orientation.x
+        qy = data.pose.orientation.y 
+        qz = data.pose.orientation.z 
+        euler = euler_from_quaternion([qx, qy, qz, qw])
+        self.state_yaw = euler[2]
+
+    def pose_cb(self, data):
         self.state_pos[0] = data.pose.position.x
         self.state_pos[1] = data.pose.position.y
         self.state_pos[2] = data.pose.position.z
@@ -207,6 +223,10 @@ class UGVServer:
         self.ugvsById = dict()
         for ugv in cfg["ugvs"]:
             id = int(ugv["id"])
+            try:
+                prefix = ugv["prefix"]
+            except:
+                prefix = "car" # default is car
             initialPosition = ugv["initialPosition"]
             pos_source = ugv["pos_source"]
             yaw_source = ugv["yaw_source"]
@@ -216,11 +236,15 @@ class UGVServer:
                 pos_tag = ugv["uwb_tag_id"]
             elif pos_source == "cfuwb":
                 pos_tag = "none"
+            elif pos_source == "pose":
+                pos_tag = "none"
             else:
                 rospy.ERROR("Unsupported pos_source: {}".format(pos_source))
-            car = UGV(id, initialPosition, pos_source, yaw_source, pos_tag)
+            car = UGV(id, prefix, initialPosition, pos_source, yaw_source, pos_tag)
             self.ugvs.append(car)
             self.ugvsById[id] = car
+        
+        print("[UGVServer] Init")
 
     def stop(self, groupMask = 0):
         for ugv in self.ugvs:

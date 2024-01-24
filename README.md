@@ -153,6 +153,25 @@ timeHelper.sleep(time) # sleep for seconds
 timeHelper.plot_data() # plot x-y, yaw-t (for simulation only)
 ```
 
+### Supplement
+
+You can also use [swarm_sync_sim](https://gitee.com/bhswift/swarm_sync_sim.git) for simulation. It provides simulated UGV ROS nodes.
+
+```bash
+### 1. Launch sim clock and multiple ugv sim nodes (Specify initial poses, ugv types in the launch file)
+roslaunch sss_sim_env sim_clock.launch max_speed_ratio:=1 auto_start:=true 
+roslaunch ugv_sim multi_ugv_sim.launch
+### Or simply use wallclock time (But not able to accelerate simulation)
+roslaunch ugv_sim multi_ugv_sim.launch use_sim_time:=false
+
+### 2. Run your control scripts
+python example.py
+```
+
+To use swarm_sync_sim, specify UGV `pos_source` and `yaw_source` as `pose` which means directly getting pos and yaw from `/${prefix}${id}/pose` topic.
+
+![img1](pictures/multi_ugv_sss_sim.png)
+
 ### Contributor
 
 Peixuan Shu (shupeixuan@qq.com)
