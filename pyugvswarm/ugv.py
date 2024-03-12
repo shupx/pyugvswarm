@@ -64,6 +64,7 @@ class UGV:
             pos_tag: mocap_marker_name for mocap, uwb_tag_id for nluwb
         """
         self.id = id
+        self.pos_source = pos_source
         if pos_source == "mocap":
             self.mocap_markerset_name = pos_tag
         elif pos_source == "nluwb":
@@ -96,6 +97,7 @@ class UGV:
             raise Exception('[ugv.py] Unknown pos_source: {0}'.format(pos_source))            
 
         ## yaw subscribe topic: (mocap, imu)
+        self.yaw_source = yaw_source
         if yaw_source == "mocap":
             pass # already read in vrpn topic
         elif yaw_source == "imu":
@@ -209,7 +211,7 @@ class UGVServer:
                 directly from string.
         """
         try:
-            rospy.init_node("ugvAPI", anonymous=False)
+            rospy.init_node("ugvAPI", anonymous=true)
         except:
             pass # rosnode is already initialized by other process
 
