@@ -77,7 +77,7 @@ class UGV:
         ## cmdvel_topic: /car${id}/cmd_vel # geometry_msgs/Twist type
         self.cmdVelPublisher = rospy.Publisher(self.prefix + "/cmd_vel", geometry_msgs.msg.Twist, queue_size=1)
 
-        ## pos subscribe topic: (mocap, nluwb, cfuwb)
+        ## pos subscribe topic: (pose, mocap, nluwb, cfuwb)
         if pos_source == "mocap":
             # mocap_pose_topic: /vrpn_client_node/car${id}/pose  
             if yaw_source == "mocap": # read pose (pos+yaw)
@@ -92,11 +92,14 @@ class UGV:
             # cfuwb_pos_topic: /car${id}/pos
             rospy.Subscriber(self.prefix + "/pos", geometry_msgs.msg.PoseStamped, self.cfuwb_pos_cb, queue_size=1)
         elif pos_source == "pose":
-            rospy.Subscriber(self.prefix + "/pose", geometry_msgs.msg.PoseStamped, self.pose_cb, queue_size=1)
+            if yaw_source == "pose": # read pose (pos+yaw)
+                rospy.Subscriber(self.prefix + "/pose", geometry_msgs.msg.PoseStamped, self.pose_cb, queue_size=1)
+            else: # only read pos
+                rospy.Subscriber(self.prefix + "/pose", geometry_msgs.msg.PoseStamped, self.pose_only_pos_cb, queue_size=1)
         else:
             raise Exception('[ugv.py] Unknown pos_source: {0}'.format(pos_source))            
 
-        ## yaw subscribe topic: (mocap, imu)
+        ## yaw subscribe topic: (pose, mocap, imu)
         self.yaw_source = yaw_source
         if yaw_source == "mocap":
             pass # already read in vrpn topic
@@ -162,6 +165,11 @@ class UGV:
         euler = euler_from_quaternion([qx, qy, qz, qw])
         self.state_yaw = euler[2]
 
+    def pose_only_pos_cb(self, data):
+        self.state_pos[0] = data.pose.position.x
+        self.state_pos[1] = data.pose.position.y
+        self.state_pos[2] = data.pose.position.z
+
     def mocap_pos_cb(self, data):
         self.state_pos[0] = data.pose.position.x
         self.state_pos[1] = data.pose.position.y
@@ -211,7 +219,7 @@ class UGVServer:
                 directly from string.
         """
         try:
-            rospy.init_node("ugvAPI", anonymous=true)
+            rospy.init_node("ugvAPI", anonymous=True)
         except:
             pass # rosnode is already initialized by other process
 
